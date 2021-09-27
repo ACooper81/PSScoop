@@ -19,21 +19,20 @@
 function Get-ScoopPackages {
     [CmdletBinding()]
     param (
-        # Filter the currently installed packages by manifest ID
         [Parameter(
             Position = 0,
-            Mandatory = $false
+            Mandatory = $false,
+            HelpMessage = "Filter the currently installed packages by manifest ID"
         )]
         [String]
         $Filter,
 
-        # Return packages that are installed globaly
         [Parameter(
             Position = 1,
-            Mandatory = $false
+            HelpMessage = "Return packages that are installed globaly"
         )]
         [Switch]
-        $Global = $false
+        $Global
     )
     
     begin {
@@ -47,4 +46,4 @@ function Get-ScoopPackages {
     end {
         return $result
     }
-}
+}#Get-ScoopPackages
