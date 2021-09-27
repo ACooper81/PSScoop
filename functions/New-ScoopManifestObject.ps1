@@ -35,19 +35,19 @@ function New-ScoopManifestObject {
 
         [Parameter(
             Position = 2,
-            Mandatory = $false,
-            HelpMessage = "Manifest Name"
-        )]
-        [String]
-        $Name,
-
-        [Parameter(
-            Position = 3,
             Mandatory = $true,
             HelpMessage = "Manifest Version"
         )]
         [String]
         $Version,
+
+        [Parameter(
+            Position = 3,
+            Mandatory = $false,
+            HelpMessage = "Manifest Name"
+        )]
+        [String]
+        $Name,
 
         [Parameter(
             Position = 4,
@@ -93,8 +93,8 @@ function New-ScoopManifestObject {
     $obj = [PSCustomObject]@{
         ID = $ID
         Bucket = $Bucket
-        Name = $Name
         Version = $Version
+        Name = $Name
         Description = $Description
         Website = $Website
         License = $License
