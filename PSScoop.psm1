@@ -1,5 +1,5 @@
 #   Get the path to the function files...
-$functionpath = $PSScriptRoot + "\function\"
+$functionpath = $PSScriptRoot + "\functions\"
 
 #   Get a list of all the function file names...
 $functionlist = Get-ChildItem -Path $functionpath -Name
