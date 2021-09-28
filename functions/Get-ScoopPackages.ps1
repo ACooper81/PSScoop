@@ -29,6 +29,7 @@ function Get-ScoopPackages {
 
         [Parameter(
             Position = 1,
+            Mandatory = $false,
             HelpMessage = "Include packages that are installed globaly"
         )]
         [Switch]
@@ -36,14 +37,20 @@ function Get-ScoopPackages {
     )
     
     begin {
-        
+
+        if ($Global){
+
+        }
     }
     
     process {
-        $result = (powershell scoop list $Filter) | Out-String
+        
+        if ($Global){
+
+        }
     }
     
     end {
-        return $result
+        return $obj
     }
 }#Get-ScoopPackages
