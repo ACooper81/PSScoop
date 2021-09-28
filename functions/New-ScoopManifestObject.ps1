@@ -1,15 +1,15 @@
 <#
 .SYNOPSIS
-    Short description
+    Create scoop manifest object
 .DESCRIPTION
-    Long description
+    Creates a hashtable object with all the scoop manifest properties and some helpful methods
 .EXAMPLE
-    PS C:\> <example usage>
-    Explanation of what the example does
+    PS C:\> New-ScoopManifestObject "C:\Users\User\scoop\apps\7zip\current\scoop-manifest.json"
+    This will create a hashtable object with the manifest details
 .INPUTS
-    Inputs (if any)
+    Inputs Path String to the scoop manifest file
 .OUTPUTS
-    Output (if any)
+    Outputs a hashtable object for the manifest file
 .NOTES
     General notes
 #>
