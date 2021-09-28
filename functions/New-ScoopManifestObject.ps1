@@ -35,64 +35,25 @@ function New-ScoopManifestObject {
 
         [Parameter(
             Position = 2,
-            Mandatory = $true,
-            HelpMessage = "Manifest Version"
+            Mandatory = $false,
+            HelpMessage = "Manifest Scope"
         )]
         [String]
-        $Version,
+        $Scope = "User",
 
         [Parameter(
             Position = 3,
             Mandatory = $false,
-            HelpMessage = "Manifest Name"
+            HelpMessage = "Manifest Version"
         )]
         [String]
-        $Name,
-
-        [Parameter(
-            Position = 4,
-            Mandatory = $false,
-            HelpMessage = "Manifest Description"
-        )]
-        [String]
-        $Description,
-
-        [Parameter(
-            Position = 5,
-            Mandatory = $false,
-            HelpMessage = "Manifest Website"
-        )]
-        [String]
-        $Website,
-
-        [Parameter(
-            Position = 6,
-            Mandatory = $false,
-            HelpMessage = "Manifest License"
-        )]
-        [String]
-        $License,
-
-        [Parameter(
-            Position = 7,
-            Mandatory = $false,
-            HelpMessage = "Manifest Path"
-        )]
-        [String]
-        $Manifest,
-
-        [Parameter(
-            Position = 8,
-            Mandatory = $false,
-            HelpMessage = "Manifest Binaries"
-        )]
-        [String]
-        $Binaries
+        $Version = ""
     )
     
     $obj = [PSCustomObject]@{
         ID = $ID
         Bucket = $Bucket
+        Scope = $Scope
         Version = $Version
         Name = $Name
         Description = $Description
@@ -101,6 +62,8 @@ function New-ScoopManifestObject {
         Path = $Path
         Binaries = $Binaries
     }
+
+    $obj | Add-Member -MemberType ScriptMethod -Name Update -Value {& scoop update $obj.ID}
 
     return $obj
 }
