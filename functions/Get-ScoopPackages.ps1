@@ -29,7 +29,7 @@ function Get-ScoopPackages {
 
         [Parameter(
             Position = 1,
-            HelpMessage = "Return packages that are installed globaly"
+            HelpMessage = "Include packages that are installed globaly"
         )]
         [Switch]
         $Global
