@@ -38,12 +38,26 @@ function New-ScoopManifestObject {
     }
     
     end {
-        $obj.Add("id", ([regex]::match($Path, "\\apps\\(.*?)\\").Groups[1].Value))
         $obj.Add("path", $Path)
-        $bucket = ((Get-Content ((Get-Item $obj.path).Directory.ToString() + "\\scoop-install.json")) | ConvertFrom-Json -AsHashtable).bucket
-        $obj.Add("bucket", $bucket)
-        $obj | Add-Member -MemberType ScriptMethod -Name Update -Value {& scoop update $obj.ID}
-
+        if ($Path.Contains("scoop-manifest.json")){
+            $obj.Add("id", ([regex]::match($Path, "\\apps\\(.*?)\\").Groups[1].Value))
+            $bucket = ((Get-Content ((Get-Item $obj.path).Directory.ToString() + "\\scoop-install.json")) | ConvertFrom-Json -AsHashtable).bucket
+            $obj.Add("bucket", $bucket)
+            If ($Path.Contains("ProgramData")){
+                $obj.Add("scope", "Global")
+                $obj | Add-Member -MemberType ScriptMethod -Name Update -Value {& sudo scoop update $obj.id -g}
+            } else{
+                $obj.Add("scope", "User")
+                $obj | Add-Member -MemberType ScriptMethod -Name Update -Value {& scoop update $obj.id}
+            }
+        }
+        if ($Path.Contains("buckets")){
+            $obj.Add("id", (Get-Item $Path).BaseName)
+            $bucket = [regex]::match($Path, "\\buckets\\(.*?)\\").Groups[1].Value
+            $obj.Add("bucket", $bucket)
+            $obj | Add-Member -MemberType ScriptMethod -Name UserInstall -Value {& scoop install $obj.id}
+            $obj | Add-Member -MemberType ScriptMethod -Name GlobalInstall -Value {& sudo scoop install $obj.id -g}
+        }
         return $obj
     }
     
