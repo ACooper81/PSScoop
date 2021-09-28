@@ -20,50 +20,31 @@ function New-ScoopManifestObject {
         [Parameter(
             Position = 0,
             Mandatory = $true,
-            HelpMessage = "Manifest ID"
+            HelpMessage = "Manifest Path"
         )]
+        [ValidateScript({Test-Path $_ -PathType 'leaf'})] 
         [String]
-        $ID,
-
-        [Parameter(
-            Position = 1,
-            Mandatory = $true,
-            HelpMessage = "Manifest Bucket"
-        )]
-        [String]
-        $Bucket,
-
-        [Parameter(
-            Position = 2,
-            Mandatory = $false,
-            HelpMessage = "Manifest Scope"
-        )]
-        [String]
-        $Scope = "User",
-
-        [Parameter(
-            Position = 3,
-            Mandatory = $false,
-            HelpMessage = "Manifest Version"
-        )]
-        [String]
-        $Version = ""
+        $Path
     )
-    
-    $obj = [PSCustomObject]@{
-        ID = $ID
-        Bucket = $Bucket
-        Scope = $Scope
-        Version = $Version
-        Name = $Name
-        Description = $Description
-        Website = $Website
-        License = $License
-        Path = $Path
-        Binaries = $Binaries
+
+    begin {
+        $obj = $null
     }
 
-    $obj | Add-Member -MemberType ScriptMethod -Name Update -Value {& scoop update $obj.ID}
+    process {
+        if (Test-Path -Path $Path){
+            $obj = Get-Content $Path | ConvertFrom-Json -AsHashtable
+        }
+    }
+    
+    end {
+        $obj.Add("id", ([regex]::match($Path, "\\apps\\(.*?)\\").Groups[1].Value))
+        $obj.Add("path", $Path)
+        $bucket = ((Get-Content ((Get-Item $obj.path).Directory.ToString() + "\\scoop-install.json")) | ConvertFrom-Json -AsHashtable).bucket
+        $obj.Add("bucket", $bucket)
+        $obj | Add-Member -MemberType ScriptMethod -Name Update -Value {& scoop update $obj.ID}
 
-    return $obj
+        return $obj
+    }
+    
 }
