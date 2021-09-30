@@ -58,7 +58,7 @@ function New-ScoopManifestObject {
             $obj | Add-Member -MemberType ScriptMethod -Name UserInstall -Value {& scoop install $obj.id}
             $obj | Add-Member -MemberType ScriptMethod -Name GlobalInstall -Value {& sudo scoop install $obj.id -g}
         }
+        # $obj = $obj.GetEnumerator() | Sort-Object Name
         return $obj
     }
-    
 }
