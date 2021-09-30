@@ -17,13 +17,19 @@
 function Update-Scoop {
     [CmdletBinding()]
     param (
-        # Updates scoop app and installed buckets
         [Parameter(
-            Mandatory=$false,
             Position=0,
+            Mandatory=$false,
             HelpMessage="Update scoop and buckets.")]
         [switch]
-        $Buckets
+        $Buckets = $false,
+
+        [Parameter(
+            Position=1,
+            Mandatory=$false,
+            HelpMessage="Update app using id")]
+        [string]
+        $App
     )
     
     begin {
@@ -31,7 +37,15 @@ function Update-Scoop {
     }
     
     process {
-        
+        if ($buckets -eq $true){
+            
+        }
+        if ($App -ne $null -and $App -ne ""){
+            # $userApps = Get-ScoopApps -User
+            # $globalApps = Get-ScoopApps -Global
+            Invoke-Command {& scoop update $App}
+            Invoke-Command {& scoop update $App -g}
+        }
     }
     
     end {
