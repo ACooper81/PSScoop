@@ -12,5 +12,5 @@ foreach ($function in $functionlist)
 }
 
 # Functions to export from this module
-$functions = @('Update-Scoop','Get-ScoopApps')
-Export-ModuleMember -Function $functions
+# $functions = @('Update-Scoop','Get-ScoopApps')
+# Export-ModuleMember -Function $functions
