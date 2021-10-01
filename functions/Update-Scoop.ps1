@@ -72,7 +72,7 @@ function Update-Scoop {
                 Invoke-Command {& scoop update $App -g}
             }
         }
-        if ($Apps -ne $null -and $Apps -ne ""){
+        if ($Apps -ne ""){
             # $userApps = Get-ScoopApps -User
             # $globalApps = Get-ScoopApps -Global
             foreach ($item in $Apps) {
