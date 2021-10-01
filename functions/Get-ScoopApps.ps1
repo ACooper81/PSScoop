@@ -42,9 +42,9 @@ function Get-ScoopApps {
         $objs = @{}
         # Write-Verbose $objs.Keys
         $objs.Clear()
-        
+
         # $obj.GetEnumerator() | ForEach-Object{if($_.key -like "*Install*"){Write-Output $_.key; Write-Output $_.Value}}
-        $userPath = "C:\Users\Adrian\scoop\apps"
+        $userPath = "$env:UserProfile\scoop\apps"
         # Write-Verbose $userPath
         $globalPath = "C:\ProgramData\scoop\apps"
         # Write-Verbose $globalPath
@@ -96,7 +96,8 @@ function Get-ScoopApps {
     }
     
     end {
-        $objs = $objs.GetEnumerator() | Sort-Object Name
+        # $objs = $objs.GetEnumerator() | Sort-Object Name
+        # Write-Verbose $objs.Keys
         return $objs
     }
 }#Get-ScoopPackages
