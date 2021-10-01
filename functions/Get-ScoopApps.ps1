@@ -41,7 +41,7 @@ function Get-ScoopApps {
         # $objs = '{"key": "value"}' | ConvertFrom-Json -AsHashtable
         $objs = @{}
         # Write-Verbose $objs.Keys
-        $objs.Clear()
+        # $objs.Clear()
 
         # $obj.GetEnumerator() | ForEach-Object{if($_.key -like "*Install*"){Write-Output $_.key; Write-Output $_.Value}}
         $userPath = "$env:UserProfile\scoop\apps"
