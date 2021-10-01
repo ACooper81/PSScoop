@@ -29,22 +29,70 @@ function Update-Scoop {
             Mandatory=$false,
             HelpMessage="Update app using id")]
         [string]
-        $App
+        $App,
+
+        [Parameter(
+            Position=2,
+            Mandatory=$false,
+            HelpMessage="Update a list of apps using id")]
+        [string[]]
+        $Apps,
+
+        [Parameter(
+            Position=3,
+            Mandatory=$false,
+            HelpMessage="Update all installed apps")]
+        [switch]
+        $AllApps,
+
+        [Parameter(
+            Position=4,
+            Mandatory=$false,
+            HelpMessage="Perform action on global apps")]
+        [switch]
+        $Global
     )
     
     begin {
-        
+        $userApps = @{}
+        $globalApps = @{}
+        $userApps = Get-ScoopApps -User
+        $globalApps = Get-ScoopApps -Global
     }
     
     process {
-        if ($buckets -eq $true){
-            
+        if ($Buckets -eq $true){
+            Invoke-Command {& scoop update}
         }
         if ($App -ne $null -and $App -ne ""){
+            if ($userApps.Contains($App)){
+                Invoke-Command {& scoop update $App}
+            }
+            if ($globalApps.Contains($App) -and $Global -eq $true){
+                Invoke-Command {& scoop update $App -g}
+            }
+        }
+        if ($Apps -ne $null -and $Apps -ne ""){
             # $userApps = Get-ScoopApps -User
             # $globalApps = Get-ScoopApps -Global
-            Invoke-Command {& scoop update $App}
-            Invoke-Command {& scoop update $App -g}
+            foreach ($item in $Apps) {
+                if ($userApps.Contains($item)){
+                    Invoke-Command {& scoop update $item}
+                }
+                if ($globalApps.Contains($item) -and $Global -eq $true){
+                    Invoke-Command {& scoop update $item -g}
+                }
+            }
+        }
+        if($AllApps -eq $true){
+            foreach ($item in $userApps.Keys) {
+                Update-Scoop -App $item
+            }
+            foreach ($item in $globalApps.Keys) {
+                if ($Global -eq $true){
+                    Update-Scoop -App $item -Global
+                }
+            }
         }
     }
     
