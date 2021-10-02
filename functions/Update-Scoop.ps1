@@ -29,7 +29,7 @@ function Update-Scoop {
             Mandatory=$false,
             HelpMessage="Update app using id")]
         [string]
-        $App,
+        $App = "",
 
         [Parameter(
             Position=2,
@@ -68,6 +68,7 @@ function Update-Scoop {
     )
     
     begin {
+        # Write-Verbose $App
         $userAppsList = @{}
         # $userApps.Clear()
         $globalAppsList = @{}
@@ -82,10 +83,10 @@ function Update-Scoop {
         }
         if ($App -ne ""){
             if ($userAppsList.Contains($App)){
-                Invoke-Command {& scoop update $App}
+                Invoke-Command {& powershell scoop update $App}
             }
             if ($globalAppsList.Contains($App) -and $Global -eq $true){
-                Invoke-Command {& scoop update $App -g}
+                Invoke-Command {& powershell scoop update $App -g}
             }
         }
         if ($Apps -ne ""){
