@@ -82,11 +82,8 @@ function Update-Scoop {
     )
     
     begin {
-        # Write-Verbose $App
         $userAppsList = @{}
-        # $userApps.Clear()
         $globalAppsList = @{}
-        # $globalApps.Clear()
         $userAppsList = Get-ScoopApps -User
         $globalAppsList = Get-ScoopApps -Global
     }
