@@ -84,8 +84,8 @@ function Update-Scoop {
     begin {
         $userAppsList = @{}
         $globalAppsList = @{}
-        $userAppsList = Get-ScoopApps -User
-        $globalAppsList = Get-ScoopApps -Global
+        $userAppsList = Get-Scoop -UserApps
+        $globalAppsList = Get-Scoop -GlobalApps
     }
     
     process {
