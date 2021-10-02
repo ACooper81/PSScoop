@@ -55,12 +55,19 @@ function Update-Scoop {
         [Parameter(
             Position=5,
             Mandatory=$false,
+            HelpMessage="Forces action")]
+        [switch]
+        $Force = $false,
+
+        [Parameter(
+            Position=6,
+            Mandatory=$false,
             HelpMessage="Update only global apps")]
         [switch]
         $GlobalApps = $false,
 
         [Parameter(
-            Position=6,
+            Position=7,
             Mandatory=$false,
             HelpMessage="Update only user apps")]
         [switch]
@@ -82,12 +89,33 @@ function Update-Scoop {
             Invoke-Command {& scoop update}
         }
         if ($App -ne ""){
-            if ($userAppsList.Contains($App)){
-                Invoke-Command {& powershell scoop update $App}
-            }
-            if ($globalAppsList.Contains($App) -and $Global -eq $true){
-                Invoke-Command {& powershell scoop update $App -g}
-            }
+            $commandString = ""
+            $globalString = ""
+            $forceString = ""
+            $commandString = "& powershell scoop update $App"
+            Write-Verbose -Message $commandString
+            if ($Global -eq $true){$globalString = "-g"}
+            Write-Verbose -Message $globalString
+            if ($Force -eq $true){$forceString = "-f"}
+            Write-Verbose -Message $forceString
+            $command = "$commandString $globalString $forceString"
+            Write-Verbose -Message $command
+            Invoke-Expression $command
+            # if ($userAppsList.Contains($App)){
+            #     # $command = & powershell scoop update $App
+            #     if ($Force = $true){$command += " -f"}
+            #     Invoke-Command {$command}
+            # }
+            # if ($globalAppsList.Contains($App) -and $Global -eq $true){
+            #     # $command = & powershell scoop update $App
+            #     if ($Force = $true){$command += " -g -f"}
+            #     Invoke-Command {$command}
+            # }
+            # if ($Force = $true){
+            #     $command = & powershell scoop update $App
+            #     $command += " -f"
+            #     Invoke-Command {$command}
+            # }
         }
         if ($Apps -ne ""){
             # $userApps = Get-ScoopApps -User
