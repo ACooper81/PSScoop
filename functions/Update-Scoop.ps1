@@ -92,14 +92,11 @@ function Update-Scoop {
             $commandString = ""
             $globalString = ""
             $forceString = ""
-            $commandString = "& powershell scoop update $App"
-            Write-Verbose -Message $commandString
+            $commandString = "& scoop update $App"
             if ($Global -eq $true){$globalString = "-g"}
-            Write-Verbose -Message $globalString
             if ($Force -eq $true){$forceString = "-f"}
-            Write-Verbose -Message $forceString
             $command = "$commandString $globalString $forceString"
-            Write-Verbose -Message $command
+            # Write-Verbose -Message $command
             Invoke-Expression $command
             # if ($userAppsList.Contains($App)){
             #     # $command = & powershell scoop update $App
