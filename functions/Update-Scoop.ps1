@@ -107,21 +107,6 @@ function Update-Scoop {
             $command = "$commandString $globalString $forceString $noCacheString"
             # Write-Verbose -Message $command
             Invoke-Expression $command
-            # if ($userAppsList.Contains($App)){
-            #     # $command = & powershell scoop update $App
-            #     if ($Force = $true){$command += " -f"}
-            #     Invoke-Command {$command}
-            # }
-            # if ($globalAppsList.Contains($App) -and $Global -eq $true){
-            #     # $command = & powershell scoop update $App
-            #     if ($Force = $true){$command += " -g -f"}
-            #     Invoke-Command {$command}
-            # }
-            # if ($Force = $true){
-            #     $command = & powershell scoop update $App
-            #     $command += " -f"
-            #     Invoke-Command {$command}
-            # }
         }
         if ($Apps -ne ""){
             # $userApps = Get-ScoopApps -User
