@@ -104,7 +104,7 @@ function Update-Scoop {
             if ($Global -eq $true){$globalString = "-g"}
             if ($Force -eq $true){$forceString = "-f"}
             if ($NoCache -eq $true){$noCacheString = "-k"}
-            $command = "$commandString $globalString $forceString"
+            $command = "$commandString $globalString $forceString $noCacheString"
             # Write-Verbose -Message $command
             Invoke-Expression $command
             # if ($userAppsList.Contains($App)){
