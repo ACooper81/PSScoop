@@ -18,13 +18,6 @@ function Update-Scoop {
     [CmdletBinding()]
     param (
         [Parameter(
-            Position=0,
-            Mandatory=$false,
-            HelpMessage="Update scoop and buckets.")]
-        [switch]
-        $Buckets = $false,
-
-        [Parameter(
             Position=1,
             Mandatory=$false,
             HelpMessage="Update app using id")]
@@ -48,30 +41,44 @@ function Update-Scoop {
         [Parameter(
             Position=4,
             Mandatory=$false,
-            HelpMessage="Performs action on global apps")]
+            HelpMessage="Update only user apps")]
         [switch]
-        $Global = $false,
+        $UserApps = $false,
 
         [Parameter(
             Position=5,
-            Mandatory=$false,
-            HelpMessage="Forces action")]
-        [switch]
-        $Force = $false,
-
-        [Parameter(
-            Position=6,
             Mandatory=$false,
             HelpMessage="Update only global apps")]
         [switch]
         $GlobalApps = $false,
 
         [Parameter(
+            Position=6,
+            Mandatory=$false,
+            HelpMessage="Update scoop and buckets.")]
+        [switch]
+        $Buckets = $false,
+
+        [Parameter(
             Position=7,
             Mandatory=$false,
-            HelpMessage="Update only user apps")]
+            HelpMessage="Performs action on global apps")]
         [switch]
-        $UserApps = $false
+        $Global = $false,
+
+        [Parameter(
+            Position=8,
+            Mandatory=$false,
+            HelpMessage="Forces action")]
+        [switch]
+        $Force = $false,
+
+        [Parameter(
+            Position=9,
+            Mandatory=$false,
+            HelpMessage="Do not download files to cache folder")]
+        [switch]
+        $NoCache = $false
     )
     
     begin {
@@ -92,9 +99,11 @@ function Update-Scoop {
             $commandString = ""
             $globalString = ""
             $forceString = ""
+            $noCacheString = ""
             $commandString = "& scoop update $App"
             if ($Global -eq $true){$globalString = "-g"}
             if ($Force -eq $true){$forceString = "-f"}
+            if ($NoCache -eq $true){$noCacheString = "-k"}
             $command = "$commandString $globalString $forceString"
             # Write-Verbose -Message $command
             Invoke-Expression $command
