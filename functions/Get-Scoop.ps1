@@ -41,9 +41,9 @@ function Get-Scoop {
         # $objs.Clear()
 
         # $obj.GetEnumerator() | ForEach-Object{if($_.key -like "*Install*"){Write-Output $_.key; Write-Output $_.Value}}
-        $userPath = "$env:UserProfile\scoop\apps"
+        $userAppsPath = "$env:UserProfile\scoop\apps"
         # Write-Verbose $userPath
-        $globalPath = "C:\ProgramData\scoop\apps"
+        $globalAppsPath = "C:\ProgramData\scoop\apps"
         # Write-Verbose $globalPath
     }
     
@@ -55,7 +55,7 @@ function Get-Scoop {
         }
         if ($UserApps -eq $true){
             # Write-Verbose "User true"
-            foreach ($folder in (Get-ChildItem -Path $userPath)){
+            foreach ($folder in (Get-ChildItem -Path $userAppsPath)){
                 # Write-Verbose $folder
                 $obj = @{}
                 $manifestPath = $folder.ToString() + "\current\scoop-manifest.json"
@@ -72,7 +72,7 @@ function Get-Scoop {
         }
         if ($GlobalApps -eq $true){
             # Write-Verbose "Global true"
-            foreach ($folder in (Get-ChildItem -Path $globalPath)){
+            foreach ($folder in (Get-ChildItem -Path $globalAppsPath)){
                 $obj = @{}
                 $manifestPath = $folder.ToString() + "\current\scoop-manifest.json"
                 if (Test-Path -Path $manifestPath){
