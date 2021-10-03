@@ -19,7 +19,7 @@ function Get-Scoop {
         [Parameter(
             Position = 1,
             Mandatory = $false,
-            HelpMessage = "Include packages that are installed Globaly"
+            HelpMessage = "Include apps that are installed Globaly"
         )]
         [Switch]
         $GlobalApps = $false,
@@ -27,10 +27,26 @@ function Get-Scoop {
         [Parameter(
             Position = 2,
             Mandatory = $false,
-            HelpMessage = "Include packages that are installed as current user"
+            HelpMessage = "Include apps that are installed as current user"
         )]
         [Switch]
-        $UserApps = $false
+        $UserApps = $false,
+
+        [Parameter(
+            Position = 3,
+            Mandatory = $false,
+            HelpMessage = "Get app manifest"
+        )]
+        [String]
+        $App = "",
+
+        [Parameter(
+            Position = 3,
+            Mandatory = $false,
+            HelpMessage = "Get app manifest from this bucket"
+        )]
+        [String]
+        $Bucket = ""
     )
     
     begin {
@@ -41,18 +57,26 @@ function Get-Scoop {
         # $objs.Clear()
 
         # $obj.GetEnumerator() | ForEach-Object{if($_.key -like "*Install*"){Write-Output $_.key; Write-Output $_.Value}}
+        $bucketsPath = "$env:UserProfile\scoop\buckets"
         $userAppsPath = "$env:UserProfile\scoop\apps"
-        # Write-Verbose $userPath
         $globalAppsPath = "C:\ProgramData\scoop\apps"
-        # Write-Verbose $globalPath
     }
     
     process {
-        if ($GlobalApps -eq $false -and $UserApps -eq $false){
-            # Write-Verbose "Both false"
-            $GlobalApps = $true
-            $UserApps = $true
+        if ($App -ne "" -and $Bucket -ne ""){
+            $manifestPath = Get-ChildItem -Path "$bucketsPath\$Bucket\" -Filter "$App.json" -Recurse -ErrorAction SilentlyContinue -Force
+            if (Test-Path -Path $manifestPath){
+                $obj = New-ScoopManifestObject -Path $manifestPath
+                $currentId = $obj.id
+                $objs.Add($currentId, $obj)
+            }
+
         }
+        # if ($GlobalApps -eq $false -and $UserApps -eq $false){
+        #     # Write-Verbose "Both false"
+        #     $GlobalApps = $true
+        #     $UserApps = $true
+        # }
         if ($UserApps -eq $true){
             # Write-Verbose "User true"
             foreach ($folder in (Get-ChildItem -Path $userAppsPath)){
@@ -89,7 +113,7 @@ function Get-Scoop {
                 }
             }
         }
-        # Write-Verbose "This function has run"
+        
     }
     
     end {
