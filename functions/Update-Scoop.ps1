@@ -119,10 +119,23 @@ function Update-Scoop {
         }
         if($AllApps -eq $true){
             foreach ($item in $userAppsList.Keys) {
-                Update-Scoop -App $item
+                $obj = Get-Scoop -App $item -Bucket $userAppsList[$item].bucket
+                # Write-Verbose $obj[$item].id
+                # Write-Verbose [Version]($obj[$item].version)
+                # Write-Verbose [Version]($userAppsList[$item].version)
+                if ($obj[$item].version -ne $userAppsList[$item].version) {
+                    Update-Scoop -App $item
+                }
             }
             foreach ($item in $globalAppsList.Keys) {
-                Update-Scoop -App $item -Global
+                $obj = Get-Scoop -App $item -Bucket $globalAppsList[$item].bucket
+                # Write-Verbose $obj[$item].id
+                # Write-Verbose [Version]($obj[$item].version)
+                # Write-Verbose [Version]($globalAppsList[$item].version)
+                # Write-Verbose ($obj[$item].version -ne $globalAppsList[$item].version)
+                if ($obj[$item].version -ne $globalAppsList[$item].version) {
+                    Update-Scoop -App $item -Global
+                }
             }
         }
         if($GlobalApps -eq $true){
