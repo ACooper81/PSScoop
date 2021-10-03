@@ -93,15 +93,17 @@ function Update-Scoop {
             Invoke-Command {& scoop update}
         }
         if ($App -ne ""){
+            $startString = ""
             $commandString = ""
             $globalString = ""
             $forceString = ""
             $noCacheString = ""
-            $commandString = "& scoop update $App"
-            if ($Global -eq $true){$globalString = "-g"}
+            $startString = "& "
+            $commandString = "scoop update $App"
+            if ($Global -eq $true){$globalString = "-g"; $startString = "& sudo"}
             if ($Force -eq $true){$forceString = "-f"}
             if ($NoCache -eq $true){$noCacheString = "-k"}
-            $command = "$commandString $globalString $forceString $noCacheString"
+            $command = "$startString $commandString $globalString $forceString $noCacheString"
             # Write-Verbose -Message $command
             Invoke-Expression $command
         }
