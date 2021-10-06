@@ -52,7 +52,7 @@ function Get-Scoop {
     begin {
         # $objs = $null
         # $objs = '{"key": "value"}' | ConvertFrom-Json -AsHashtable
-        $objs = @{}
+        $objs = [ordered]@{}
         # Write-Verbose $objs.Keys
         # $objs.Clear()
 
@@ -79,7 +79,10 @@ function Get-Scoop {
         # }
         if ($UserApps -eq $true){
             # Write-Verbose "User true"
+            # Write-Verbose Get-ChildItem -Path $userAppsPath
+            # (Get-ChildItem -Path $userAppsPath) | Sort-Object -Property key | ForEach-Object {
             foreach ($folder in (Get-ChildItem -Path $userAppsPath)){
+                # Write-Verbose Get-ChildItem -Path $userAppsPath
                 # Write-Verbose $folder
                 $obj = @{}
                 $manifestPath = $folder.ToString() + "\current\scoop-manifest.json"
@@ -96,6 +99,7 @@ function Get-Scoop {
         }
         if ($GlobalApps -eq $true){
             # Write-Verbose "Global true"
+            # (Get-ChildItem -Path $globalAppsPath) | Sort-Object -Property key | ForEach-Object {
             foreach ($folder in (Get-ChildItem -Path $globalAppsPath)){
                 $obj = @{}
                 $manifestPath = $folder.ToString() + "\current\scoop-manifest.json"
@@ -113,12 +117,11 @@ function Get-Scoop {
                 }
             }
         }
-        
     }
     
     end {
-        # $objs = $objs.GetEnumerator() | Sort-Object Name
-        # Write-Verbose $objs.Keys
+        # $objs = $objs.GetEnumerator() | Sort-Object -Property name
+        # Write-Output ($objs.GetEnumerator() | Sort-Object -Property Name)
         return $objs
     }
 }#Get-ScoopPackages
