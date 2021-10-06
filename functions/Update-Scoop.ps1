@@ -118,6 +118,7 @@ function Update-Scoop {
             }
         }
         if($AllApps -eq $true){
+            # $userAppsList | ForEach-Object {Write-Output "Test"}
             foreach ($item in $userAppsList.Keys) {
                 $obj = Get-Scoop -App $item -Bucket $userAppsList[$item].bucket
                 # Write-Verbose $obj[$item].id
@@ -137,6 +138,15 @@ function Update-Scoop {
                     Update-Scoop -App $item -Global
                 }
             }
+
+            # foreach ($item in $userAppsListUpdates){
+            #     Write-Output $item
+            #     Update-Scoop -App $item
+            # }
+            # foreach ($item in $globalAppsListUpdates){
+            #     Write-Output $item
+            #     Update-Scoop -App $item -Global
+            # }
         }
         if($GlobalApps -eq $true){
             foreach ($item in $globalAppsList.Keys) {
