@@ -140,14 +140,32 @@ function Update-Scoop {
                 Update-Scoop -App $update -Global
             }
         }
-        if($GlobalApps -eq $true){
-            foreach ($item in $globalAppsList.Keys) {
-                Update-Scoop -App $item -Global
+        if($UserApps -eq $true){
+            $userAppUpdates = @{}
+            foreach ($item in $userAppsList.Keys) {
+                $obj = Get-Scoop -App $item -Bucket $userAppsList[$item].bucket
+                if ($obj[$item].version -ne $userAppsList[$item].version) {
+                    $userAppUpdates.Add($obj[$item].id, $obj)
+                    $output = $obj[$item].id + " - " + $userAppsList[$item].version + " >> " + $obj[$item].version
+                    Write-Output $output
+                }
+            }
+            foreach ($update in $userAppUpdates.Keys){
+                Update-Scoop -App $update
             }
         }
-        if($UserApps -eq $true){
-            foreach ($item in $userAppsList.Keys) {
-                Update-Scoop -App $item
+        if($GlobalApps -eq $true){
+            $globalAppUpdates = @{}
+            foreach ($item in $globalAppsList.Keys) {
+                $obj = Get-Scoop -App $item -Bucket $globalAppsList[$item].bucket
+                if ($obj[$item].version -gt $globalAppsList[$item].version) {
+                    $globalAppUpdates.Add($obj[$item].id, $obj)
+                    $output = $obj[$item].id + " - " + $globalAppsList[$item].version + " >> " + $obj[$item].version
+                    Write-Output $output
+                }
+            }
+            foreach ($update in $globalAppUpdates.Keys){
+                Update-Scoop -App $update -Global
             }
         }
     }
