@@ -102,12 +102,9 @@ function Update-Scoop {
             if ($Force -eq $true){$forceString = "-f"}
             if ($NoCache -eq $true){$noCacheString = "-k"}
             $command = "$commandString $globalString $forceString $noCacheString"
-            # Write-Verbose -Message $command
             Invoke-Expression $command
         }
         if ($Apps -ne ""){
-            # $userApps = Get-ScoopApps -User
-            # $globalApps = Get-ScoopApps -Global
             foreach ($item in $Apps) {
                 if ($userAppsList.Contains($item)){
                     Update-Scoop -App $item
@@ -118,35 +115,30 @@ function Update-Scoop {
             }
         }
         if($AllApps -eq $true){
-            # $userAppsList | ForEach-Object {Write-Output "Test"}
+            $userAppUpdates = @{}
             foreach ($item in $userAppsList.Keys) {
                 $obj = Get-Scoop -App $item -Bucket $userAppsList[$item].bucket
-                # Write-Verbose $obj[$item].id
-                # Write-Verbose [Version]($obj[$item].version)
-                # Write-Verbose [Version]($userAppsList[$item].version)
                 if ($obj[$item].version -ne $userAppsList[$item].version) {
-                    Update-Scoop -App $item
+                    $userAppUpdates.Add($obj[$item].id, $obj)
+                    $output = $obj[$item].id + " - " + $userAppsList[$item].version + " >> " + $obj[$item].version
+                    Write-Output $output
                 }
             }
+            $globalAppUpdates = @{}
             foreach ($item in $globalAppsList.Keys) {
                 $obj = Get-Scoop -App $item -Bucket $globalAppsList[$item].bucket
-                # Write-Verbose $obj[$item].id
-                # Write-Verbose [Version]($obj[$item].version)
-                # Write-Verbose [Version]($globalAppsList[$item].version)
-                # Write-Verbose ($obj[$item].version -ne $globalAppsList[$item].version)
-                if ($obj[$item].version -ne $globalAppsList[$item].version) {
-                    Update-Scoop -App $item -Global
+                if ($obj[$item].version -gt $globalAppsList[$item].version) {
+                    $globalAppUpdates.Add($obj[$item].id, $obj)
+                    $output = $obj[$item].id + " - " + $globalAppsList[$item].version + " >> " + $obj[$item].version
+                    Write-Output $output
                 }
             }
-
-            # foreach ($item in $userAppsListUpdates){
-            #     Write-Output $item
-            #     Update-Scoop -App $item
-            # }
-            # foreach ($item in $globalAppsListUpdates){
-            #     Write-Output $item
-            #     Update-Scoop -App $item -Global
-            # }
+            foreach ($update in $userAppUpdates.Keys){
+                Update-Scoop -App $update
+            }
+            foreach ($update in $globalAppUpdates.Keys){
+                Update-Scoop -App $update -Global
+            }
         }
         if($GlobalApps -eq $true){
             foreach ($item in $globalAppsList.Keys) {
