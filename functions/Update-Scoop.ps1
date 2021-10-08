@@ -151,7 +151,7 @@ function Update-Scoop {
                 }
             }
             foreach ($update in $userAppUpdates.Keys){
-                Update-Scoop -App $update
+                # Update-Scoop -App $update
             }
         }
         if($GlobalApps -eq $true){
@@ -165,7 +165,7 @@ function Update-Scoop {
                 }
             }
             foreach ($update in $globalAppUpdates.Keys){
-                Update-Scoop -App $update -Global
+                # Update-Scoop -App $update -Global
             }
         }
     }
