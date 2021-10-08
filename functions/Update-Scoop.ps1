@@ -120,7 +120,7 @@ function Update-Scoop {
                 $obj = Get-Scoop -App $item -Bucket $userAppsList[$item].bucket
                 if ($obj[$item].version -ne $userAppsList[$item].version) {
                     $userAppUpdates.Add($obj[$item].id, $obj)
-                    $output = $obj[$item].id + " - " + $userAppsList[$item].version + " >> " + $obj[$item].version
+                    $output = $obj[$item].id + " - " + $userAppsList[$item].version + " -> " + $obj[$item].version
                     Write-Output $output
                 }
             }
@@ -129,7 +129,7 @@ function Update-Scoop {
                 $obj = Get-Scoop -App $item -Bucket $globalAppsList[$item].bucket
                 if ($obj[$item].version -gt $globalAppsList[$item].version) {
                     $globalAppUpdates.Add($obj[$item].id, $obj)
-                    $output = $obj[$item].id + " - " + $globalAppsList[$item].version + " >> " + $obj[$item].version
+                    $output = $obj[$item].id + " - " + $globalAppsList[$item].version + " -> " + $obj[$item].version
                     Write-Output $output
                 }
             }
@@ -146,12 +146,12 @@ function Update-Scoop {
                 $obj = Get-Scoop -App $item -Bucket $userAppsList[$item].bucket
                 if ($obj[$item].version -ne $userAppsList[$item].version) {
                     $userAppUpdates.Add($obj[$item].id, $obj)
-                    $output = $obj[$item].id + " - " + $userAppsList[$item].version + " >> " + $obj[$item].version
+                    $output = $obj[$item].id + " - " + $userAppsList[$item].version + " -> " + $obj[$item].version
                     Write-Output $output
                 }
             }
             foreach ($update in $userAppUpdates.Keys){
-                # Update-Scoop -App $update
+                Update-Scoop -App $update
             }
         }
         if($GlobalApps -eq $true){
@@ -160,12 +160,12 @@ function Update-Scoop {
                 $obj = Get-Scoop -App $item -Bucket $globalAppsList[$item].bucket
                 if ($obj[$item].version -gt $globalAppsList[$item].version) {
                     $globalAppUpdates.Add($obj[$item].id, $obj)
-                    $output = $obj[$item].id + " - " + $globalAppsList[$item].version + " >> " + $obj[$item].version
+                    $output = $obj[$item].id + " - " + $globalAppsList[$item].version + " -> " + $obj[$item].version
                     Write-Output $output
                 }
             }
             foreach ($update in $globalAppUpdates.Keys){
-                # Update-Scoop -App $update -Global
+                Update-Scoop -App $update -Global
             }
         }
     }
