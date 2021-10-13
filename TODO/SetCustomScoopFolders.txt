@@ -1,0 +1,10 @@
+$env:SCOOP='D:\Scoop'
+ # First add the user-level environment variable Scoop
+[environment]::setEnvironmentVariable('SCOOP',$env:SCOOP,'User')
+
+$env:SCOOP_GLOBAL='D:\GlobalScoopApps'
+ # Add the user-level environment variable Scoop_Global
+[environment]::setEnvironmentVariable('SCOOP_GLOBAL',$env:SCOOP_GLOBAL,'Machine')
+
+[environment]::setEnvironmentVariable('SCOOP_CACHE',"D:\scoop\cache",'User')
+
