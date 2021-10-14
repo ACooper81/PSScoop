@@ -146,7 +146,7 @@ function Update-Scoop {
                 $obj = Get-Scoop -App $item -Bucket $userAppsList[$item].bucket
                 if ($obj[$item].version -ne $userAppsList[$item].version) {
                     $userAppUpdates.Add($obj[$item].id, $obj)
-                    $output = $obj[$item].id + " - " + $userAppsList[$item].version + " -> " + $obj[$item].version
+                    $output = $obj[$item].id + ": " + $userAppsList[$item].version + " -> " + $obj[$item].version + " (User)"
                     Write-Output $output
                 }
             }
@@ -160,7 +160,7 @@ function Update-Scoop {
                 $obj = Get-Scoop -App $item -Bucket $globalAppsList[$item].bucket
                 if ($obj[$item].version -gt $globalAppsList[$item].version) {
                     $globalAppUpdates.Add($obj[$item].id, $obj)
-                    $output = $obj[$item].id + " - " + $globalAppsList[$item].version + " -> " + $obj[$item].version
+                    $output = $obj[$item].id + ": " + $globalAppsList[$item].version + " -> " + $obj[$item].version + " (Global)"
                     Write-Output $output
                 }
             }
