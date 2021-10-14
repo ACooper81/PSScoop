@@ -78,7 +78,14 @@ function Update-Scoop {
             Mandatory=$false,
             HelpMessage="Do not download files to cache folder")]
         [switch]
-        $NoCache = $false
+        $NoCache = $false,
+
+        [Parameter(
+            Position=9,
+            Mandatory=$false,
+            HelpMessage="Resets and reinstalls broken apps")]
+        [switch]
+        $Reset = $false
     )
     
     begin {
