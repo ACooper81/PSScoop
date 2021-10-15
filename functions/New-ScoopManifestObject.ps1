@@ -41,7 +41,7 @@ function New-ScoopManifestObject {
         $obj.Add("path", $Path)
         if ($Path.Contains("scoop-manifest.json")){
             $obj.Add("id", ([regex]::match($Path, "\\apps\\(.*?)\\").Groups[1].Value))
-            $bucket = ((Get-Content ((Get-Item $obj.path).Directory.ToString() + "\\scoop-install.json")) | ConvertFrom-Json -AsHashtable).bucket
+            $bucket = ((Get-Content ((Get-Item $obj.path).DirectoryName + "\\scoop-install.json")) | ConvertFrom-Json -AsHashtable).bucket
             $obj.Add("bucket", $bucket)
             If ($Path.Contains("ProgramData")){
                 $obj.Add("scope", "Global")
