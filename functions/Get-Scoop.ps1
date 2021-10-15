@@ -19,7 +19,7 @@ function Get-Scoop {
         [Parameter(
             Position = 1,
             Mandatory = $false,
-            HelpMessage = "Include apps that are installed Globaly"
+            HelpMessage = "Include apps that are installed globaly"
         )]
         [Switch]
         $GlobalApps = $false,
