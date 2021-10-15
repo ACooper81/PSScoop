@@ -85,7 +85,7 @@ function Get-Scoop {
                 # Write-Verbose Get-ChildItem -Path $userAppsPath
                 # Write-Verbose $folder
                 $obj = @{}
-                $manifestPath = $folder.ToString() + "\current\scoop-manifest.json"
+                $manifestPath = $folder.FullName + "\current\scoop-manifest.json"
                 # Write-Verbose $manifestPath
                 if (Test-Path -Path $manifestPath){
                     $obj = New-ScoopManifestObject -Path $manifestPath
@@ -102,7 +102,7 @@ function Get-Scoop {
             # (Get-ChildItem -Path $globalAppsPath) | Sort-Object -Property key | ForEach-Object {
             foreach ($folder in (Get-ChildItem -Path $globalAppsPath)){
                 $obj = @{}
-                $manifestPath = $folder.ToString() + "\current\scoop-manifest.json"
+                $manifestPath = $folder.FullName + "\current\scoop-manifest.json"
                 if (Test-Path -Path $manifestPath){
                     $obj = New-ScoopManifestObject -Path $manifestPath
                     $currentId = $obj.id
