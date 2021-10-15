@@ -24,16 +24,16 @@ function Repair-Scoop {
     process {
         if ($UserApps -eq $true){
             foreach ($folder in (Get-ChildItem -Path $userAppsPath)){
-                $manifestPath = $folder.ToString() + "\current\scoop-manifest.json"
-                if (!(Test-Path -Path $manifestPath)){
+                $manifestPath = $folder.FullName + "\current\scoop-manifest.json"
+                if ((Test-Path -Path $manifestPath) -eq $false){
                     Reset-Scoop -App $folder.Name
                 }
             }
         }
         if ($GlobalApps -eq $true){
             foreach ($folder in (Get-ChildItem -Path $globalAppsPath)){
-                $manifestPath = $folder.ToString() + "\current\scoop-manifest.json"
-                if (!(Test-Path -Path $manifestPath)){
+                $manifestPath = $folder.FullName + "\current\scoop-manifest.json"
+                if ((Test-Path -Path $manifestPath) -eq $false){
                     Reset-Scoop -App $folder.Name
                 }
             }
