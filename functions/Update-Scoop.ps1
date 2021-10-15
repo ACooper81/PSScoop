@@ -85,7 +85,7 @@ function Update-Scoop {
             Mandatory=$false,
             HelpMessage="Resets and reinstalls broken apps")]
         [switch]
-        $Reset = $false
+        $Repair = $false
     )
     
     begin {
@@ -123,6 +123,9 @@ function Update-Scoop {
         }
         if($AllApps -eq $true){
             $userAppUpdates = @{}
+            if ($Repair -eq $true){
+                Repair-Scoop -UserApps
+            }
             foreach ($item in $userAppsList.Keys) {
                 $obj = Get-Scoop -App $item -Bucket $userAppsList[$item].bucket
                 if ($obj[$item].version -ne $userAppsList[$item].version) {
@@ -132,6 +135,9 @@ function Update-Scoop {
                 }
             }
             $globalAppUpdates = @{}
+            if ($Repair -eq $true){
+                Repair-Scoop -GlobalApps
+            }
             foreach ($item in $globalAppsList.Keys) {
                 $obj = Get-Scoop -App $item -Bucket $globalAppsList[$item].bucket
                 if ($obj[$item].version -gt $globalAppsList[$item].version) {
@@ -149,6 +155,9 @@ function Update-Scoop {
         }
         if($UserApps -eq $true){
             $userAppUpdates = @{}
+            if ($Repair -eq $true){
+                Repair-Scoop -UserApps
+            }
             foreach ($item in $userAppsList.Keys) {
                 $obj = Get-Scoop -App $item -Bucket $userAppsList[$item].bucket
                 if ($obj[$item].version -ne $userAppsList[$item].version) {
@@ -163,6 +172,9 @@ function Update-Scoop {
         }
         if($GlobalApps -eq $true){
             $globalAppUpdates = @{}
+            if ($Repair -eq $true){
+                Repair-Scoop -GlobalApps
+            }
             foreach ($item in $globalAppsList.Keys) {
                 $obj = Get-Scoop -App $item -Bucket $globalAppsList[$item].bucket
                 if ($obj[$item].version -gt $globalAppsList[$item].version) {
