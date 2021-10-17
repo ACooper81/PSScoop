@@ -65,7 +65,7 @@ function Get-Scoop {
     process {
         if ($App -ne "" -and $Bucket -ne ""){
             $manifestPath = Get-ChildItem -Path "$bucketsPath\$Bucket\" -Filter "$App.json" -Recurse -ErrorAction SilentlyContinue -Force
-            if (Test-Path -Path $manifestPath){
+            if ($null -ne $manifestPath -and (Test-Path -Path $manifestPath)){
                 $obj = New-ScoopManifestObject -Path $manifestPath
                 $currentId = $obj.id
                 $objs.Add($currentId, $obj)
