@@ -128,6 +128,10 @@ function Update-Scoop {
             }
             foreach ($item in $userAppsList.Keys) {
                 $obj = Get-Scoop -App $item -Bucket $userAppsList[$item].bucket
+                if ($null -eq $obj){
+                    $errorMsg = $userAppsList[$item].id + " has been removed from " + $userAppsList[$item].bucket
+                    Write-Output $errorMsg
+                }
                 if ($null -ne $obj -and $obj[$item].version -gt $userAppsList[$item].version) {
                     $userAppUpdates.Add($obj[$item].id, $obj)
                     $output = $obj[$item].id + ": " + $userAppsList[$item].version + " -> " + $obj[$item].version + " (User)"
@@ -140,6 +144,10 @@ function Update-Scoop {
             }
             foreach ($item in $globalAppsList.Keys) {
                 $obj = Get-Scoop -App $item -Bucket $globalAppsList[$item].bucket
+                if ($null -eq $obj){
+                    $errorMsg = $globalAppsList[$item].id + " has been removed from " + $globalAppsList[$item].bucket
+                    Write-Output $errorMsg
+                }
                 if ($null -ne $obj -and $obj[$item].version -gt $globalAppsList[$item].version) {
                     $globalAppUpdates.Add($obj[$item].id, $obj)
                     $output = $obj[$item].id + ": " + $globalAppsList[$item].version + " -> " + $obj[$item].version + " (Global)"
