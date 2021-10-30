@@ -9,7 +9,7 @@ function Repair-Scoop {
         $UserApps = $false,
 
         [Parameter(
-            Position=1,
+            Position=2,
             Mandatory=$false,
             HelpMessage="Include apps that are installed globaly")]
         [switch]
