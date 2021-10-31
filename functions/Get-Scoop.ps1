@@ -16,6 +16,7 @@
 function Get-Scoop {
     [CmdletBinding()]
     param (
+        [Alias("ga")]
         [Parameter(
             Position = 1,
             Mandatory = $false,
@@ -24,6 +25,7 @@ function Get-Scoop {
         [Switch]
         $GlobalApps = $false,
 
+        [Alias("ua")]
         [Parameter(
             Position = 2,
             Mandatory = $false,
@@ -32,6 +34,7 @@ function Get-Scoop {
         [Switch]
         $UserApps = $false,
 
+        [Alias("a")]
         [Parameter(
             Position = 3,
             Mandatory = $false,
@@ -40,6 +43,7 @@ function Get-Scoop {
         [String]
         $App = "",
 
+        [Alias("b")]
         [Parameter(
             Position = 3,
             Mandatory = $false,

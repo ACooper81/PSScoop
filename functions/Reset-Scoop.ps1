@@ -1,6 +1,7 @@
 function Reset-Scoop {
     [CmdletBinding()]
     param (
+        [Alias("a")]
         [Parameter(
             Position=1,
             Mandatory=$true,
@@ -8,6 +9,7 @@ function Reset-Scoop {
         [string[]]
         $App,
 
+        [Alias("v")]
         [Parameter(
             Position=2,
             Mandatory=$false,

@@ -17,6 +17,7 @@
 function New-ScoopManifestObject {
     [CmdletBinding()]
     param (
+        [Alias("p")]
         [Parameter(
             Position = 0,
             Mandatory = $true,

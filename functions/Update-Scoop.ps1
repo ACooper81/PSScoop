@@ -17,6 +17,7 @@
 function Update-Scoop {
     [CmdletBinding()]
     param (
+        [Alias("a")]
         [Parameter(
             Position=1,
             Mandatory=$false,
@@ -31,6 +32,7 @@ function Update-Scoop {
         [string[]]
         $Apps,
 
+        [Alias("aa")]
         [Parameter(
             Position=3,
             Mandatory=$false,
@@ -38,6 +40,7 @@ function Update-Scoop {
         [switch]
         $AllApps = $false,
 
+        [Alias("ua")]
         [Parameter(
             Position=4,
             Mandatory=$false,
@@ -45,6 +48,7 @@ function Update-Scoop {
         [switch]
         $UserApps = $false,
 
+        [Alias("ga")]
         [Parameter(
             Position=5,
             Mandatory=$false,
@@ -52,6 +56,7 @@ function Update-Scoop {
         [switch]
         $GlobalApps = $false,
 
+        [Alias("b")]
         [Parameter(
             Position=6,
             Mandatory=$false,
@@ -59,6 +64,7 @@ function Update-Scoop {
         [switch]
         $Buckets = $false,
 
+        [Alias("g")]
         [Parameter(
             Position=7,
             Mandatory=$false,
@@ -66,6 +72,7 @@ function Update-Scoop {
         [switch]
         $Global = $false,
 
+        [Alias("f")]
         [Parameter(
             Position=8,
             Mandatory=$false,
@@ -73,6 +80,7 @@ function Update-Scoop {
         [switch]
         $Force = $false,
 
+        [Alias("k")]
         [Parameter(
             Position=9,
             Mandatory=$false,
@@ -80,6 +88,7 @@ function Update-Scoop {
         [switch]
         $NoCache = $false,
 
+        [Alias("r")]
         [Parameter(
             Position=9,
             Mandatory=$false,

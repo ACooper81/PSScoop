@@ -1,6 +1,7 @@
 function Repair-Scoop {
     [CmdletBinding()]
     param (
+        [Alias("ua")]
         [Parameter(
             Position=1,
             Mandatory=$false,
@@ -8,6 +9,7 @@ function Repair-Scoop {
         [switch]
         $UserApps = $false,
 
+        [Alias("ga")]
         [Parameter(
             Position=2,
             Mandatory=$false,
