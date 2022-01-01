@@ -170,7 +170,10 @@ function Update-Scoop {
                     $errorMsg = $userAppsList[$item].id + " has been removed from " + $userAppsList[$item].bucket
                     Write-Output $errorMsg
                 }
-                if ($null -ne $obj -and $obj[$item].version -ne $userAppsList[$item].version) {
+                if ($null -eq $globalAppsList[$item].id){
+                    Write-Output "$item not found in bucket."
+                }
+                elseif ($null -ne $obj -and $obj[$item].version -ne $userAppsList[$item].version) {
                     $userAppUpdates.Add($obj[$item].id, $obj)
                     $output = $obj[$item].id + ": " + $userAppsList[$item].version + " -> " + $obj[$item].version + " (User)"
                     Write-Output $output
@@ -190,7 +193,10 @@ function Update-Scoop {
                 }
                 # $versionCheck = $obj[$item].id + $obj[$item].version + "->" + $globalAppsList[$item].version
                 # Write-Verbose (($obj[$item].version) -gt ($globalAppsList[$item].version))
-                if ($null -ne $obj -and $obj[$item].version -ne $globalAppsList[$item].version) {
+                if ($null -eq $globalAppsList[$item].id){
+                    Write-Output "$item not found in bucket."
+                }
+                elseif ($null -ne $obj -and $obj[$item].version -ne $globalAppsList[$item].version) {
                     # Write-Verbose $obj[$item].id
                     $globalAppUpdates.Add($obj[$item].id, $obj)
                     $output = $obj[$item].id + ": " + $globalAppsList[$item].version + " -> " + $obj[$item].version + " (Global)"
