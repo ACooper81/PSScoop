@@ -173,7 +173,7 @@ function Update-Scoop {
                 if ($null -eq $obj[$item]){
                     Write-Error "$item not found in bucket."
                 }
-                if ($null -ne $obj -and $obj[$item].version -ne $userAppsList[$item].version) {
+                elseif ($null -ne $obj -and $obj[$item].version -ne $userAppsList[$item].version) {
                     $userAppUpdates.Add($obj[$item].id, $obj)
                     $output = $obj[$item].id + ": " + $userAppsList[$item].version + " -> " + $obj[$item].version + " (User)"
                     Write-Output $output
@@ -196,7 +196,7 @@ function Update-Scoop {
                 if ($null -eq $obj[$item]){
                     Write-Error "$item not found in bucket."
                 }
-                if ($null -ne $obj -and $obj[$item].version -ne $globalAppsList[$item].version) {
+                elseif ($null -ne $obj -and $obj[$item].version -ne $globalAppsList[$item].version) {
                     # Write-Verbose $obj[$item].id
                     $globalAppUpdates.Add($obj[$item].id, $obj)
                     $output = $obj[$item].id + ": " + $globalAppsList[$item].version + " -> " + $obj[$item].version + " (Global)"
