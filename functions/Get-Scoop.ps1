@@ -9,7 +9,7 @@
 .INPUTS
     Optional String $Filter
 .OUTPUTS
-    System.String
+    $objs
 .NOTES
     
 #>
